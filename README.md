@@ -1,4 +1,15 @@
-# Android Currency Detector App using TensorFlow Lite image classification 
+# Android Currency Detector App using TensorFlow Lite image classification
+
+An Android app that helps visually impaired users identify currency notes: it points the phone camera at a note, classifies it on-device with a TensorFlow Lite model (ResNet-50 trained with Teachable Machine) and shows which note it is.
+
+## 🔗 Demo
+
+There is no web demo because this is an Android app. Screenshots:
+
+![App screenshot](ss.png)
+![Detection screenshot](Screenshot%202024-04-15%20132049.png)
+
+> **Note:** the `app/` module source code (Java files, `AndroidManifest.xml`, model assets) is not in this repository yet; `app` is currently an empty file. Add the module from the original Android Studio project to make the repo buildable. `jcenter()` has been replaced with `mavenCentral()` because JCenter is read-only.
 
 ## Overview
 
