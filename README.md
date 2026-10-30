@@ -1,100 +1,44 @@
-# Android Currency Detector App using TensorFlow Lite image classification 
+# Currency Detection App for the Visually Impaired
 
-## Overview
+An Android app that uses the phone's back camera to recognise currency notes in real time with **TensorFlow Lite** image classification, so visually impaired users can identify notes.
 
-This is an example application for [TensorFlow Lite](https://tensorflow.org/lite)
-on Android. It uses
-[Image classification](https://www.tensorflow.org/lite/models/image_classification/overview)
-to continuously classify whatever it sees from the device's back camera.
-Inference is performed using the TensorFlow Lite Java API. The demo app
-classifies frames in real-time, displaying the top most probable
-classifications. It allows the user to choose between a floating point or
-[quantized](https://www.tensorflow.org/lite/performance/post_training_quantization)
-model, select the thread count, and decide whether to run on CPU, GPU, or via
-[NNAPI](https://developer.android.com/ndk/guides/neuralnetworks). 
+- **Model:** ResNet50 trained with Google Teachable Machine (batch size 16, 100 epochs), exported to TensorFlow Lite.
+- **Inference:** TensorFlow Lite Java API, on CPU, GPU or NNAPI, with a configurable thread count.
+- Based on the [TensorFlow Lite image classification example](https://github.com/tensorflow/examples/tree/master/lite/examples/image_classification/android). See [`EXPLORE_THE_CODE.md`](EXPLORE_THE_CODE.md) for a walkthrough of the code.
 
-These instructions walk you through building and
-running the demo on an Android device. For an explanation of the source, see
-[TensorFlow Lite Android image classification example](https://www.tensorflow.org/lite/models/image_classification/android).
+| | |
+|---|---|
+| ![App screenshot](ss.png) | ![Screenshot](Screenshot%20(26).png) |
 
-<!-- TODO(b/124116863): Add app screenshot. -->
+> ⚠️ **The Android source code (`app/` module) is not in this repository.** `app` is currently an empty file, so the project cannot be built yet. To make it buildable, upload the `app/` folder from your Android Studio project (it contains `src/`, `build.gradle` and `assets/` with the `.tflite` model and `labels.txt`), replacing the empty `app` file.
 
-### Model
-Inside Assests folder zip file is there.
+## How to run (step by step, once `app/` is added)
 
-Resnet50 
-16 batch size
-100 epochs
-Teachable ML
+**1. Install Android Studio** (latest version) from https://developer.android.com/studio
 
-## Requirements
+**2. Download the project**
 
-*   Android Studio 3.2 (installed on a Linux, Mac or Windows machine)
-
-*   Android device in
-    [developer mode](https://developer.android.com/studio/debug/dev-options)
-    with USB debugging enabled
-
-*   USB cable (to connect Android device to your computer)
-
-## Build and run
-
-### Step 1. Clone the TensorFlow examples source code
-
-Clone the TensorFlow examples GitHub repository to your computer to get the demo
-application.
-
-```
-https://github.com/amitmohanty022/Currency-Detection-App-for-Visually-Impaired.git
+```bash
+git clone https://github.com/amitmohanty022/Currency-Detection-App-for-Visually-Impaired.git
 ```
 
-Open the TensorFlow source code in Android Studio. To do this, open Android
-Studio and select `Open an existing project`, setting the folder to
-`examples/lite/examples/image_classification/android`
+**3. Open it**
 
-<img src="images/classifydemo_img1.png?raw=true" />
+In Android Studio, choose **File → Open** and select the `Currency-Detection-App-for-Visually-Impaired` folder. Android Studio creates `local.properties` with your SDK path automatically.
 
-### Step 2. Build the Android Studio project
+**4. Let Gradle sync**
 
-Select `Build -> Make Project` and check that the project builds successfully.
-You will need Android SDK configured in the settings. You'll need at least SDK
-version 23. The `build.gradle` file will prompt you to download any missing
-libraries.
+If Android Studio offers to upgrade the Android Gradle Plugin, accept it. Install any SDK it asks for (minimum SDK 23).
 
-The file `download.gradle` directs gradle to download the two models used in the
-example, placing them into `assets`.
+**5. Prepare your phone**
 
-<img src="images/classifydemo_img4.png?raw=true" style="width: 40%" />
+- Turn on **Developer options** (tap *Build number* 7 times in *Settings → About phone*).
+- Turn on **USB debugging**, connect the phone with a USB cable, and accept the prompt on the phone.
 
-<img src="images/classifydemo_img2.png?raw=true" style="width: 60%" />
+**6. Run**
 
-<aside class="note"><b>Note:</b><p>`build.gradle` is configured to use
-TensorFlow Lite's nightly build.</p><p>If you see a build error related to
-compatibility with Tensorflow Lite's Java API (for example, `method X is
-undefined for type Interpreter`), there has likely been a backwards compatible
-change to the API. You will need to run `git pull` in the examples repo to
-obtain a version that is compatible with the nightly build.</p></aside>
+Click **Run ▶** and select your phone. Open the app, allow camera access, and point the camera at a currency note.
 
-### Step 3. Install and run the app
-
-Connect the Android device to the computer and be sure to approve any ADB
-permission prompts that appear on your phone. Select `Run -> Run app.` Select
-the deployment target in the connected devices to the device on which the app
-will be installed. This will install the app on the device.
-
-<img src="images/classifydemo_img5.png?raw=true" style="width: 60%" />
-
-<img src="images/classifydemo_img6.png?raw=true" style="width: 70%" />
-
-<img src="images/classifydemo_img7.png?raw=true" style="width: 40%" />
-
-<img src="images/classifydemo_img8.png?raw=true" style="width: 80%" />
-
-To test the app, open the app called `TFL Classify` on your device. When you run
-the app the first time, the app will request permission to access the camera.
-Re-installing the app may require you to uninstall the previous installations.
-
-## Assets folder
-_Do not delete the assets folder content_. If you explicitly deleted the
-files, choose `Build -> Rebuild` to re-download the deleted model files into the
-assets folder.
+## Updates (2026)
+- `jcenter()` (shut down) replaced with `mavenCentral()` in `build.gradle`.
+- `local.properties` (machine-specific SDK path) is no longer tracked.
